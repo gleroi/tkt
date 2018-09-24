@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "strict": true,
+        "module": "amd",
+        "noImplicitAny": true,
+        "jsx": "react",
+        "sourceMap": true,
+        "moduleResolution": "node",
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
