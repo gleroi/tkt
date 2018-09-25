@@ -36,6 +36,7 @@ input {
     border-style: none;
     border-bottom: 1px solid var(--main-color);
     margin: 3px;
+    size: 1;
 }
 
 .tickets {

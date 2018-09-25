@@ -52,14 +52,14 @@ export class Main extends React.Component<any, MainState> {
                             </>)
                         })
                     }
-                    <input key="new_value" type="text" value={this.state.new_value} onChange={(e) => this.onNewValueChanged(e)} />
-                    <input key="new_quantity" type="text" value={this.state.new_quantity} onChange={(e) => this.onNewQuantityChanged(e)} />
+                    <input key="new_value" type="text" size={3} value={this.state.new_value} onChange={(e) => this.onNewValueChanged(e)} />
+                    <input key="new_quantity" type="text" size={2} value={this.state.new_quantity} onChange={(e) => this.onNewQuantityChanged(e)} />
                     <button className="ticket-row" key="new_add" disabled={this.canAddTicket(this.state.new_value, this.state.new_quantity)} onClick={(e) => this.onAddTicket(e)}>+</button>
                 </div>
             </section>
             <section className="results">
                 <h2>Résultats</h2>
-                <div >
+                <div>
                     {
                         this.state.results.map((r, ri) => <div className="result">{
                             r.map((qty, t) => (
