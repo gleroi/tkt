@@ -21384,6 +21384,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 tickets: [],
                 new_value: "",
                 new_quantity: "",
+                compute_price: 0,
                 results: [],
             };
         }
@@ -21393,11 +21394,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             });
         }
         render() {
-            let price = 0;
-            let c = convert(this.state.price);
-            if (c) {
-                price = c;
-            }
             return (React.createElement("div", null,
                 React.createElement("h1", null, "Tickets r\u00E9partis"),
                 React.createElement("section", null,
@@ -21423,7 +21419,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                     React.createElement("h2", null, "R\u00E9sultats"),
                     React.createElement("div", null, this.state.results.map((r, ri) => React.createElement("div", { className: "result" }, r.map((qty, t) => (React.createElement("div", { key: `result-${ri}-${t}`, className: "result-item" },
                         React.createElement("div", { className: "result-item-val" }, this.state.tickets[t].value),
-                        React.createElement("div", null, qty)))).concat(React.createElement("div", { key: `price-${ri}`, className: "result-diff" }, (price - compute_1.priceOfResult(r, this.state.tickets)).toFixed(2)))))))));
+                        React.createElement("div", null, qty)))).concat(React.createElement("div", { key: `price-${ri}`, className: "result-diff" }, (this.state.compute_price - compute_1.priceOfResult(r, this.state.tickets)).toFixed(2)))))))));
         }
         onCompute(e) {
             let price = convert(this.state.price);
@@ -21432,6 +21428,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             }
             let results = compute_1.compute(price, this.state.tickets);
             this.setState({
+                compute_price: price,
                 results: results
             });
         }

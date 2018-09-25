@@ -6,6 +6,7 @@ interface MainState {
     tickets: Ticket[];
     new_value: string;
     new_quantity: string;
+    compute_price: number;
     results: Result[];
 }
 
@@ -17,6 +18,7 @@ export class Main extends React.Component<any, MainState> {
             tickets: [],
             new_value: "",
             new_quantity: "",
+            compute_price: 0,
             results: [],
         }
     }
@@ -28,12 +30,6 @@ export class Main extends React.Component<any, MainState> {
     }
 
     render() {
-        let price: number = 0;
-        let c = convert(this.state.price)
-        if (c) {
-            price = c;
-        }
-
         return (<div>
             <h1>Tickets répartis</h1>
             <section>
@@ -72,7 +68,7 @@ export class Main extends React.Component<any, MainState> {
                                     <div>{qty}</div>
                                 </div>
                             )).concat(<div key={`price-${ri}`} className="result-diff">
-                                {(price - priceOfResult(r, this.state.tickets)).toFixed(2)}
+                                {(this.state.compute_price - priceOfResult(r, this.state.tickets)).toFixed(2)}
                             </div>)
                         }</div>
                         )
@@ -89,6 +85,7 @@ export class Main extends React.Component<any, MainState> {
         }
         let results = compute(price, this.state.tickets);
         this.setState({
+            compute_price: price,
             results: results
         });
     }
@@ -97,7 +94,6 @@ export class Main extends React.Component<any, MainState> {
         let price = convert(sprice);
         return !price
     }
-
     
     onPriceChanged(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()

@@ -1,5 +1,6 @@
 html {
-    --main-color: #8888ff;
+    --main-color: #64649e;
+    --result-border-color: #adaddb;
 }
 
 body {
@@ -9,6 +10,7 @@ body {
 
 h1 {
     background-color: var(--main-color);
+    box-shadow: 0 1px 5px 2px #555;
     color: white;
     margin:0;
     padding: 7px;
@@ -74,7 +76,7 @@ input {
     display: flex;
     justify-content: flex-start;
     justify-items: center;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--result-border-color);
 
 }
 
@@ -84,7 +86,7 @@ input {
 }
 
 .result .result-item {
-    border-right: 1px solid #ddd;
+    border-right: 1px solid var(--result-border-color);
 }
 
 .result-item .result-item-val {
