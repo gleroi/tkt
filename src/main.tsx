@@ -1,108 +1,176 @@
 import * as React from "react";
-
-interface Ticket {
-    value?: number;
-    quantity?: number;
-}
+import { Ticket, Result, priceOfResult, compute } from "./compute";
 
 interface MainState {
-    price?: number;
+    price: string;
     tickets: Ticket[];
-    new: Ticket;
+    new_value: string;
+    new_quantity: string;
+    results: Result[];
 }
 
 export class Main extends React.Component<any, MainState> {
     constructor(props: any, context: any) {
         super(props, context)
         this.state = {
+            price: "",
             tickets: [],
-            new: {}
+            new_value: "",
+            new_quantity: "",
+            results: [],
         }
     }
 
+    componentDidMount() {
+        this.setState({
+            tickets: loadDB()
+        });
+    }
+
     render() {
+        let price: number = 0;
+        let c = convert(this.state.price)
+        if (c) {
+            price = c;
+        }
+
         return (<div>
             <h1>Tickets répartis</h1>
             <section>
-                <h4>Prix</h4>
+                <h2>Prix</h2>
                 <input type="text" value={this.state.price} onChange={(e) => this.onPriceChanged(e)} />
-                <button>=</button>
+                <button disabled={this.canCompute(this.state.price)} onClick={(e) => this.onCompute(e)}>=</button>
             </section>
             <section>
-                <h4>Tickets</h4>
+                <h2>Tickets</h2>
                 <div className="tickets">
-                    <div>Tickets</div>
-                    <div>Quantité</div>
-                    <div>&nbsp;</div>
+                    <div className="ticket-header">Montant</div>
+                    <div className="ticket-header">Quantité</div>
+                    <span>&nbsp;</span>
                     {
-                        this.state.tickets.map(t => {
-                            return (
-                                <>
-                                    <input type="text" value={t.value} />
-                                    <input type="text" value={t.quantity} />
-                                    <div>&nbsp;</div>
-                                </>)
+                        this.state.tickets.map((t, i) => {
+                            return (<>
+                                <div className="ticket-row" key={"ticketval" + i}>{t.value.toString()}</div>
+                                <div className="ticket-row" key={"ticketqty" + i}>{t.quantity.toString()}</div>
+                                <button className="ticket-row" key={"ticketadd" + i} onClick={(e) => this.onRemoveTicket(e, i)}>-</button>
+                            </>)
                         })
                     }
-                    <input type="text" value={this.state.new.value} onChange={(e) => this.onNewValueChanged(e)} />
-                    <input type="text" value={this.state.new.quantity} onChange={(e) => this.onNewQuantityChanged(e)} />
-                    <button disabled={this.canAddTicket(this.state.new)} onClick={(e) => this.onAddTicket(e)}>+</button>
+                    <input key="new_value" type="text" value={this.state.new_value} onChange={(e) => this.onNewValueChanged(e)} />
+                    <input key="new_quantity" type="text" value={this.state.new_quantity} onChange={(e) => this.onNewQuantityChanged(e)} />
+                    <button className="ticket-row" key="new_add" disabled={this.canAddTicket(this.state.new_value, this.state.new_quantity)} onClick={(e) => this.onAddTicket(e)}>+</button>
                 </div>
             </section>
-            <section>
-                <h4>Résultats</h4>
-
+            <section className="results">
+                <h2>Résultats</h2>
+                <div >
+                    {
+                        this.state.results.map((r, ri) => <div className="result">{
+                            r.map((qty, t) => (
+                                <div key={`result-${ri}-${t}`} className="result-item">
+                                    <div className="result-item-val">{this.state.tickets[t].value}</div>
+                                    <div>{qty}</div>
+                                </div>
+                            )).concat(<div key={`price-${ri}`} className="result-diff">
+                                {(price - priceOfResult(r, this.state.tickets)).toFixed(2)}
+                            </div>)
+                        }</div>
+                        )
+                    }
+                </div>
             </section>
         </div>);
     }
 
+    onCompute(e: React.MouseEvent<HTMLButtonElement>) {
+        let price = convert(this.state.price);
+        if (price == null) {
+            return;
+        }
+        let results = compute(price, this.state.tickets);
+        this.setState({
+            results: results
+        });
+    }
+
+    canCompute(sprice: string) {
+        let price = convert(sprice);
+        return !price
+    }
+
     onAddTicket(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
+        let val = convert(this.state.new_value);
+        let qty = convert(this.state.new_quantity);
+        if (val == null || qty == null) {
+            return;
+        }
         let tickets = this.state.tickets.concat([
-            { value: this.state.new.value, quantity: this.state.new.quantity}
+            { value: val, quantity: qty }
         ]);
-        let newTicket : Ticket = {};
+        saveDB(tickets);
         this.setState({
-            new: newTicket,
+            new_value: "",
+            new_quantity: "",
             tickets: tickets
         });
     }
 
-    canAddTicket(t : Ticket) {
-        return !(t.quantity && t.value)
+    canAddTicket(sval: string, sqty: string) {
+        let val = convert(sval);
+        let qty = convert(sqty);
+        return !(qty && val);
+    }
+
+    onRemoveTicket(e: React.MouseEvent<HTMLButtonElement>, ticketIndex: number) {
+        e.preventDefault();
+        let tickets = this.state.tickets.slice(0);
+        tickets.splice(ticketIndex, 1);
+        saveDB(tickets);
+        this.setState({
+            tickets: tickets
+        });
     }
 
     onPriceChanged(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()
         this.setState({
-            price: convert(e.currentTarget.value)
+            price: e.currentTarget.value
         });
     }
 
     onNewValueChanged(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()
         this.setState({
-            new: {
-                value:convert(e.currentTarget.value),
-                quantity: this.state.new.quantity
-            }
+            new_value: e.currentTarget.value,
         });
     }
 
     onNewQuantityChanged(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()
         this.setState({
-            new: {
-                value:this.state.new.value,
-                quantity:convert(e.currentTarget.value)
-            }
+            new_quantity: e.currentTarget.value
         });
     }
 }
 
-function convert(val: string): number|undefined {
+
+
+function loadDB(): Ticket[] {
+    let str = window.localStorage.getItem("tkt_tickets");
+    if (str == null) {
+        return [];
+    }
+    return JSON.parse(str);
+}
+
+function saveDB(tickets: Ticket[]) {
+    window.localStorage.setItem("tkt_tickets", JSON.stringify(tickets));
+}
+
+function convert(val: string): number | undefined {
     try {
-        let price: number|null = null;
+        let price: number | null = null;
         if (!(val == null || val.length == 0)) {
             price = parseFloat(val);
         }

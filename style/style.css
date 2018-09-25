@@ -1,5 +1,23 @@
-body {
-    max-width: 500px;
+html {
+    --main-color: #8888ff;
+}
+
+button {
+    padding: 0.5em 0.3em;
+    border-style: none;
+    min-width: 2em;
+    background-color: var(--main-color);
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+input {
+    font-size: 1em;
+    padding: 0.5em 0.3em 0.2em 0.3em;
+    border-style: none;
+    border-bottom: 1px solid var(--main-color);
+    margin: 3px;
 }
 
 .tickets {
@@ -7,12 +25,59 @@ body {
     grid-template-columns: 1fr 1fr 3em;
 }
 
-button {
-    height: 2.6em;
+.tickets > div.ticket-row {
+    font-size: 1em;
+    padding: 0.5em 0.3em 0.2em 0.3em;
+    border-style: none;
+    border-bottom: 1px solid #666;
+    margin: 3px;
+}
+
+.tickets > button.ticket-row {
+    padding: 0.5em 0.3em;
+    border-style: none;
     margin: 2px;
 }
 
-input {
-    height: 2em;
-    margin: 3px;
+.tickets > .ticket-header {
+    font-weight: bold;
+}
+
+.results {
+    height: 100%;
+    margin: 0;
+}
+
+.results > div {
+    width: 100%;
+    overflow: auto;
+    margin: 0;
+}
+
+.result {
+    display: flex;
+    justify-content: flex-start;
+    justify-items: center;
+    border-bottom: 1px solid #ddd;
+
+}
+
+.result .result-item, .result .result-diff {
+    padding: 0.5em 1em;
+    text-align: center;
+}
+
+.result .result-item {
+    border-right: 1px solid #ddd;
+}
+
+.result-item .result-item-val {
+    font-size: 0.8em;
+}
+
+.result .result-diff {
+    justify-content: flex-end;
+    border-right: 0;
+    vertical-align: middle;
+    margin-left: auto;
 }
