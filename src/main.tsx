@@ -98,6 +98,14 @@ export class Main extends React.Component<any, MainState> {
         return !price
     }
 
+    
+    onPriceChanged(e: React.ChangeEvent<HTMLInputElement>) {
+        e.preventDefault()
+        this.setState({
+            price: e.currentTarget.value
+        });
+    }
+
     onAddTicket(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
         let val = convert(this.state.new_value);
@@ -132,12 +140,6 @@ export class Main extends React.Component<any, MainState> {
         });
     }
 
-    onPriceChanged(e: React.ChangeEvent<HTMLInputElement>) {
-        e.preventDefault()
-        this.setState({
-            price: e.currentTarget.value
-        });
-    }
 
     onNewValueChanged(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()

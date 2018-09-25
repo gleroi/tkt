@@ -21439,6 +21439,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             let price = convert(sprice);
             return !price;
         }
+        onPriceChanged(e) {
+            e.preventDefault();
+            this.setState({
+                price: e.currentTarget.value
+            });
+        }
         onAddTicket(e) {
             e.preventDefault();
             let val = convert(this.state.new_value);
@@ -21468,12 +21474,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             saveDB(tickets);
             this.setState({
                 tickets: tickets
-            });
-        }
-        onPriceChanged(e) {
-            e.preventDefault();
-            this.setState({
-                price: e.currentTarget.value
             });
         }
         onNewValueChanged(e) {
