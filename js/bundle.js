@@ -21355,14 +21355,14 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         let results = compute(price, tickets);
         console.assert(results.length == 10, "testSimple2:", "expected", 10, "got", results.length);
         for (let i = 0; i < results.length; i++) {
-            console.assert(arrayEqual(results[i], [i + 1]), "testSimple2:", "expected", [i + 1], "got", results[i]);
+            console.assert(arrayEqual(results[i], [10 - i]), "testSimple2:", "expected", [10 - i], "got", results[i]);
         }
     }
     function testSimple1(price, tickets) {
         let results = compute(price, tickets);
         console.assert(results.length == 2, "testSimple1:", "expected length", 2, "got", results.length);
-        console.assert(arrayEqual(results[0], [1, 0]), "testSimple1:", "expected", [1, 0], "got", results[0]);
-        console.assert(arrayEqual(results[1], [0, 1]), "testSimple1:", "expected", [0, 1], "got", results[0]);
+        console.assert(arrayEqual(results[0], [0, 1]), "testSimple1:", "expected", [1, 0], "got", results[0]);
+        console.assert(arrayEqual(results[1], [1, 0]), "testSimple1:", "expected", [0, 1], "got", results[0]);
     }
     test();
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
