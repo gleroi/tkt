@@ -21399,7 +21399,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 React.createElement("section", null,
                     React.createElement("h2", null, "Prix"),
                     React.createElement("input", { type: "text", value: this.state.price, onChange: (e) => this.onPriceChanged(e) }),
-                    React.createElement("button", { disabled: this.canCompute(this.state.price), onClick: (e) => this.onCompute(e) }, "=")),
+                    React.createElement("button", { disabled: this.canCompute(this.state.price), onClick: (e) => this.onCompute(e) },
+                        React.createElement("i", { className: "fas fa-calculator" }))),
                 React.createElement("section", null,
                     React.createElement("h2", null, "Tickets"),
                     React.createElement("div", { className: "tickets" },
@@ -21410,16 +21411,23 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                             return (React.createElement(React.Fragment, null,
                                 React.createElement("div", { className: "ticket-row", key: "ticketval" + i }, t.value.toString()),
                                 React.createElement("div", { className: "ticket-row", key: "ticketqty" + i }, t.quantity.toString()),
-                                React.createElement("button", { className: "ticket-row", key: "ticketadd" + i, onClick: (e) => this.onRemoveTicket(e, i) }, "-")));
+                                React.createElement("button", { className: "ticket-row", key: "ticketadd" + i, onClick: (e) => this.onRemoveTicket(e, i) },
+                                    React.createElement("i", { className: "fas fa-minus" }))));
                         }),
                         React.createElement("input", { key: "new_value", type: "text", size: 3, value: this.state.new_value, onChange: (e) => this.onNewValueChanged(e) }),
                         React.createElement("input", { key: "new_quantity", type: "text", size: 2, value: this.state.new_quantity, onChange: (e) => this.onNewQuantityChanged(e) }),
-                        React.createElement("button", { className: "ticket-row", key: "new_add", disabled: this.canAddTicket(this.state.new_value, this.state.new_quantity), onClick: (e) => this.onAddTicket(e) }, "+"))),
+                        React.createElement("button", { className: "ticket-row", key: "new_add", disabled: this.canAddTicket(this.state.new_value, this.state.new_quantity), onClick: (e) => this.onAddTicket(e) },
+                            React.createElement("i", { className: "fas fa-plus" })))),
                 React.createElement("section", { className: "results" },
                     React.createElement("h2", null, "R\u00E9sultats"),
-                    React.createElement("div", null, this.state.results.map((r, ri) => React.createElement("div", { className: "result" }, r.map((qty, t) => (React.createElement("div", { key: `result-${ri}-${t}`, className: "result-item" },
-                        React.createElement("div", { className: "result-item-val" }, this.state.tickets[t].value),
-                        React.createElement("div", null, qty)))).concat(React.createElement("div", { key: `price-${ri}`, className: "result-diff" }, (this.state.compute_price - compute_1.priceOfResult(r, this.state.tickets)).toFixed(2)))))))));
+                    React.createElement("div", null, this.state.results.map((r, ri) => {
+                        let diff = this.state.compute_price - compute_1.priceOfResult(r, this.state.tickets);
+                        return (React.createElement("div", { className: "result" }, r.map((qty, t) => (React.createElement("div", { key: `result-${ri}-${t}`, className: "result-item" },
+                            React.createElement("div", { className: "result-item-val" }, this.state.tickets[t].value),
+                            React.createElement("div", null, qty)))).concat(React.createElement("div", { key: `price-${ri}`, className: "result-diff" },
+                            React.createElement("div", null, diff.toFixed(2)),
+                            React.createElement("div", { className: "result-diff-label" }, diff > 0 ? "ajouté" : (diff < 0 ? "rendu" : ""))))));
+                    })))));
         }
         onCompute(e) {
             let price = convert(this.state.price);

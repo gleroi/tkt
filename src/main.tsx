@@ -35,7 +35,9 @@ export class Main extends React.Component<any, MainState> {
             <section>
                 <h2>Prix</h2>
                 <input type="text" value={this.state.price} onChange={(e) => this.onPriceChanged(e)} />
-                <button disabled={this.canCompute(this.state.price)} onClick={(e) => this.onCompute(e)}>=</button>
+                <button disabled={this.canCompute(this.state.price)} onClick={(e) => this.onCompute(e)}>
+                    <i className="fas fa-calculator"></i>
+                </button>
             </section>
             <section>
                 <h2>Tickets</h2>
@@ -48,30 +50,37 @@ export class Main extends React.Component<any, MainState> {
                             return (<>
                                 <div className="ticket-row" key={"ticketval" + i}>{t.value.toString()}</div>
                                 <div className="ticket-row" key={"ticketqty" + i}>{t.quantity.toString()}</div>
-                                <button className="ticket-row" key={"ticketadd" + i} onClick={(e) => this.onRemoveTicket(e, i)}>-</button>
+                                <button className="ticket-row" key={"ticketadd" + i} onClick={(e) => this.onRemoveTicket(e, i)}>
+                                    <i className="fas fa-minus"></i>
+                                </button>
                             </>)
                         })
                     }
                     <input key="new_value" type="text" size={3} value={this.state.new_value} onChange={(e) => this.onNewValueChanged(e)} />
                     <input key="new_quantity" type="text" size={2} value={this.state.new_quantity} onChange={(e) => this.onNewQuantityChanged(e)} />
-                    <button className="ticket-row" key="new_add" disabled={this.canAddTicket(this.state.new_value, this.state.new_quantity)} onClick={(e) => this.onAddTicket(e)}>+</button>
+                    <button className="ticket-row" key="new_add" disabled={this.canAddTicket(this.state.new_value, this.state.new_quantity)} onClick={(e) => this.onAddTicket(e)}>
+                        <i className="fas fa-plus"></i>
+                    </button>
                 </div>
             </section>
             <section className="results">
                 <h2>Résultats</h2>
                 <div>
                     {
-                        this.state.results.map((r, ri) => <div className="result">{
-                            r.map((qty, t) => (
-                                <div key={`result-${ri}-${t}`} className="result-item">
-                                    <div className="result-item-val">{this.state.tickets[t].value}</div>
-                                    <div>{qty}</div>
-                                </div>
-                            )).concat(<div key={`price-${ri}`} className="result-diff">
-                                {(this.state.compute_price - priceOfResult(r, this.state.tickets)).toFixed(2)}
-                            </div>)
-                        }</div>
-                        )
+                        this.state.results.map((r, ri) => {
+                            let diff = this.state.compute_price - priceOfResult(r, this.state.tickets);
+                            return (<div className="result">{
+                                r.map((qty, t) => (
+                                    <div key={`result-${ri}-${t}`} className="result-item">
+                                        <div className="result-item-val">{this.state.tickets[t].value}</div>
+                                        <div>{qty}</div>
+                                    </div>
+                                )).concat(<div key={`price-${ri}`} className="result-diff">
+                                    <div>{diff.toFixed(2)}</div>
+                                    <div className="result-diff-label">{diff > 0 ? "ajouté" : (diff < 0 ? "rendu" : "")}</div>
+                                </div>)
+                            }</div>
+                        )})
                     }
                 </div>
             </section>

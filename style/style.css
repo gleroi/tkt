@@ -100,3 +100,7 @@ input {
     vertical-align: middle;
     margin-left: auto;
 }
+
+.result-diff .result-diff-label {
+    font-size: 0.8em;
+}
