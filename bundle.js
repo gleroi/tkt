@@ -188,6 +188,77 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
+/***/ "./node_modules/offline-plugin/runtime.js":
+/*!************************************************!*\
+  !*** ./node_modules/offline-plugin/runtime.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var appCacheIframe;
+
+function hasSW() {
+  
+    return 'serviceWorker' in navigator && (
+      window.location.protocol === 'https:' ||
+      window.location.hostname === 'localhost' ||
+      window.location.hostname.indexOf('127.') === 0
+    );
+  
+}
+
+function install(options) {
+  options || (options = {});
+
+  
+    if (hasSW()) {
+      var registration = navigator.serviceWorker
+        .register(
+          "sw.js", {
+            
+            
+          }
+        );
+
+      
+
+      return;
+    }
+  
+
+  
+}
+
+function applyUpdate(callback, errback) {
+  
+
+  
+}
+
+function update() {
+  
+    if (hasSW()) {
+      navigator.serviceWorker.getRegistration().then(function(registration) {
+        if (!registration) return;
+        return registration.update();
+      });
+    }
+  
+
+  
+}
+
+
+  setInterval(update, 3600000);
+
+
+exports.install = install;
+exports.applyUpdate = applyUpdate;
+exports.update = update;
+
+
+/***/ }),
+
 /***/ "./node_modules/prop-types/checkPropTypes.js":
 /*!***************************************************!*\
   !*** ./node_modules/prop-types/checkPropTypes.js ***!
@@ -21356,9 +21427,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! react */ "./node_modules/react/index.js"), __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js"), __webpack_require__(/*! ./main */ "./src/main.tsx")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, React, ReactDOM, main_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! react */ "./node_modules/react/index.js"), __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js"), __webpack_require__(/*! ./main */ "./src/main.tsx"), __webpack_require__(/*! offline-plugin/runtime */ "./node_modules/offline-plugin/runtime.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, React, ReactDOM, main_1, OfflinePluginRuntime) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    OfflinePluginRuntime.install();
     ReactDOM.render(React.createElement(main_1.Main, null), document.getElementById('root-container'));
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));

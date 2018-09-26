@@ -5,6 +5,7 @@ var tsLoader = require('ts-loader');
 var styleLoader = require('style-loader');
 var cssLoader = require('css-loader');
 var json = require("json-loader");
+var OfflinePlugin = require("offline-plugin");
 
 module.exports = [{
     target: "web",
@@ -14,7 +15,7 @@ module.exports = [{
     },
 
     output: {
-        path: __dirname + "/js",
+        path: __dirname,
         filename: "[name].js",
     },
 
@@ -77,6 +78,14 @@ module.exports = [{
         }),
         new webpack.DefinePlugin({
             PACKAGE_VERSION: JSON.stringify(require("./package.json").version)
+        }),
+        new OfflinePlugin({
+            responseStrategy: "network-first",
+            excludes: ["**/*.map"],
+            externals: [
+                "https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+            ],
+            autoUpdate: true,
         })
     ]
 }
