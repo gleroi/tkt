@@ -14,8 +14,8 @@ var __wpo = {
     "1fd7f28af6314243717fbe45aad277faad32ac86": "./bundle.js"
   },
   "strategy": "changed",
-  "responseStrategy": "network-first",
-  "version": "2018-9-26 11:32:20",
+  "responseStrategy": "cache-first",
+  "version": "2018-9-26 11:38:06",
   "name": "webpack-offline",
   "pluginVersion": "5.0.5",
   "relativePaths": true
@@ -104,15 +104,15 @@ var __wpo = {
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./node_modules/offline-plugin/lib/misc/sw-loader.js?json=%7B%22data_var_name%22%3A%22__wpo%22%2C%22cacheMaps%22%3A%5B%5D%2C%22navigationPreload%22%3A%22true%22%7D!./node_modules/offline-plugin/tpls/empty-entry.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./node_modules/offline-plugin/lib/misc/sw-loader.js?json=%7B%22data_var_name%22%3A%22__wpo%22%2C%22cacheMaps%22%3A%5B%5D%2C%22navigationPreload%22%3A%22false%22%7D!./node_modules/offline-plugin/tpls/empty-entry.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/offline-plugin/lib/misc/sw-loader.js?json=%7B%22data_var_name%22%3A%22__wpo%22%2C%22cacheMaps%22%3A%5B%5D%2C%22navigationPreload%22%3A%22true%22%7D!./node_modules/offline-plugin/tpls/empty-entry.js":
-/*!****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/offline-plugin/lib/misc/sw-loader.js?json=%7B%22data_var_name%22%3A%22__wpo%22%2C%22cacheMaps%22%3A%5B%5D%2C%22navigationPreload%22%3A%22true%22%7D!./node_modules/offline-plugin/tpls/empty-entry.js ***!
-  \****************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/offline-plugin/lib/misc/sw-loader.js?json=%7B%22data_var_name%22%3A%22__wpo%22%2C%22cacheMaps%22%3A%5B%5D%2C%22navigationPreload%22%3A%22false%22%7D!./node_modules/offline-plugin/tpls/empty-entry.js":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/offline-plugin/lib/misc/sw-loader.js?json=%7B%22data_var_name%22%3A%22__wpo%22%2C%22cacheMaps%22%3A%5B%5D%2C%22navigationPreload%22%3A%22false%22%7D!./node_modules/offline-plugin/tpls/empty-entry.js ***!
+  \*****************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -893,7 +893,7 @@ function logGroup(title, assets) {
         WebpackServiceWorker(__wpo, {
 loaders: {},
 cacheMaps: [],
-navigationPreload: true,
+navigationPreload: false,
 });
         module.exports = __webpack_require__(/*! ./empty-entry.js */ "./node_modules/offline-plugin/tpls/empty-entry.js")
       
