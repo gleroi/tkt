@@ -79,7 +79,6 @@ input {
     justify-content: flex-start;
     justify-items: center;
     border-bottom: 1px solid var(--result-border-color);
-
 }
 
 .result .result-item, .result .result-diff {

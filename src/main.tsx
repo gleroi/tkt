@@ -161,8 +161,6 @@ export class Main extends React.Component<any, MainState> {
     }
 }
 
-
-
 function loadDB(): Ticket[] {
     let str = window.localStorage.getItem("tkt_tickets");
     if (str == null) {
