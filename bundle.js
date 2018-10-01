@@ -21470,7 +21470,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 React.createElement("h1", { className: "app-name" }, "Tickets r\u00E9partis"),
                 React.createElement("section", null,
                     React.createElement("h2", null, "Prix"),
-                    React.createElement("input", { type: "number", value: this.state.price, onChange: (e) => this.onPriceChanged(e) }),
+                    React.createElement("input", { type: "number", step: "0.01", value: this.state.price, onChange: (e) => this.onPriceChanged(e) }),
                     React.createElement("button", { disabled: this.canCompute(this.state.price), onClick: (e) => this.onCompute(e) },
                         React.createElement("i", { className: "fas fa-calculator" }))),
                 React.createElement("section", null,
