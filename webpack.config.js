@@ -85,7 +85,7 @@ module.exports = [{
             externals: [
                 "https://use.fontawesome.com/releases/v5.3.1/css/all.css"
             ],
-            autoUpdate: true,
+            autoUpdate: 1000 * 60 * 5,
         })
     ]
 }];

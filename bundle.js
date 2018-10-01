@@ -249,7 +249,7 @@ function update() {
 }
 
 
-  setInterval(update, 3600000);
+  setInterval(update, 300000);
 
 
 exports.install = install;
