@@ -35,9 +35,10 @@ input {
     font-size: 1em;
     padding: 0.5em 0.3em 0.2em 0.3em;
     border-style: none;
-    border-bottom: 1px solid var(--input-border-color);
+    border-bottom: 1px solid #666;
     margin: 3px;
-    size: 1;
+    min-width: 4em;
+    border-bottom: 1px solid var(--input-border-color);
 }
 
 .tickets {
@@ -45,12 +46,13 @@ input {
     grid-template-columns: 1fr 1fr 3em;
 }
 
-.tickets > div.ticket-row {
+.tickets > .ticket-row {
     font-size: 1em;
     padding: 0.5em 0.3em 0.2em 0.3em;
     border-style: none;
     border-bottom: 1px solid #666;
     margin: 3px;
+    min-width: 4em;
 }
 
 .tickets > button.ticket-row {
