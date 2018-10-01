@@ -31,7 +31,10 @@ export class Main extends React.Component<any, MainState> {
 
     render() {
         return (<div>
-            <h1 className="app-name">Tickets répartis</h1>
+            <h1 className="app-name">
+                <img src="/img/icon192-inverse.png" className="app-logo" />
+                <span>Tickets répartis</span>
+            </h1>
             <section>
                 <h2>Prix</h2>
                 <input type="number" value={this.state.price} onChange={(e) => this.onPriceChanged(e)} />

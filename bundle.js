@@ -21467,7 +21467,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         }
         render() {
             return (React.createElement("div", null,
-                React.createElement("h1", { className: "app-name" }, "Tickets r\u00E9partis"),
+                React.createElement("h1", { className: "app-name" },
+                    React.createElement("img", { src: "/img/icon192-inverse.png", className: "app-logo" }),
+                    React.createElement("span", null, "Tickets r\u00E9partis")),
                 React.createElement("section", null,
                     React.createElement("h2", null, "Prix"),
                     React.createElement("input", { type: "number", value: this.state.price, onChange: (e) => this.onPriceChanged(e) }),
