@@ -1,7 +1,21 @@
 {
     "name": "Tickets répartis",
-    "short_name": "/",
+    "short_name": "TKT",
     "description": "L'application qui aide a calculer le nombre de tickets et de monnaie a échanger lors de vos achats",
     "display": "standalone",
-    "start_url": "/index.html"
+    "theme_color": "#64649e",
+    "Scope": "/",
+    "start_url": "/index.html",
+    "icons": [
+        {
+            "src": "img/icon48.png",
+            "type": "image/png",
+            "sizes": "48x48"
+        },
+        {
+            "src": "img/icon192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        }
+    ]
 }

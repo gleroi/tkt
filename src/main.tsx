@@ -145,7 +145,6 @@ export class Main extends React.Component<any, MainState> {
         });
     }
 
-
     onNewValueChanged(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()
         this.setState({

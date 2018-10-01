@@ -80,7 +80,7 @@ module.exports = [{
             PACKAGE_VERSION: JSON.stringify(require("./package.json").version)
         }),
         new OfflinePlugin({
-            responseStrategy: "network-first",
+            responseStrategy: "cache-first",
             excludes: ["**/*.map"],
             externals: [
                 "https://use.fontawesome.com/releases/v5.3.1/css/all.css"
