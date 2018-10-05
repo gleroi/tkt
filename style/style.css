@@ -9,6 +9,10 @@ body {
     margin:0;
 }
 
+#root-container {
+    width: 100vw;
+}
+
 h1.app-name {
     background-color: var(--main-color);
     box-shadow: 0 1px 5px 2px #555;
@@ -44,11 +48,16 @@ input {
     border-bottom: 1px solid #666;
     margin: 3px;
     border-bottom: 1px solid var(--input-border-color);
+    min-width:5em!important;
+    max-width:99.99%!important;
 }
 
 .tickets {
     display: grid;
-    grid-template-columns: 1fr 1fr 3em;
+    grid-template-columns: 0.5fr 0.5fr 3em;
+    width: 100%;
+    min-width:50px!important;
+    max-width:99.99%!important;
 }
 
 .tickets > div.ticket-row {
@@ -57,7 +66,6 @@ input {
     border-style: none;
     border-bottom: 1px solid #666;
     margin: 3px;
-    min-width: 4em;
 }
 
 .tickets > button.ticket-row {
