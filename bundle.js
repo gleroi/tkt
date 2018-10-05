@@ -21488,8 +21488,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                                 React.createElement("button", { className: "ticket-row", key: "ticketadd" + i, onClick: (e) => this.onRemoveTicket(e, i) },
                                     React.createElement("i", { className: "fas fa-minus" }))));
                         }),
-                        React.createElement("input", { key: "new_value", type: "number", className: "ticket-row", value: this.state.new_value, onChange: (e) => this.onNewValueChanged(e) }),
-                        React.createElement("input", { key: "new_quantity", type: "number", className: "ticket-row", value: this.state.new_quantity, onChange: (e) => this.onNewQuantityChanged(e) }),
+                        React.createElement("input", { key: "new_value", type: "number", value: this.state.new_value, onChange: (e) => this.onNewValueChanged(e) }),
+                        React.createElement("input", { key: "new_quantity", type: "number", value: this.state.new_quantity, onChange: (e) => this.onNewQuantityChanged(e) }),
                         React.createElement("button", { className: "ticket-row", key: "new_add", disabled: this.canAddTicket(this.state.new_value, this.state.new_quantity), onClick: (e) => this.onAddTicket(e) },
                             React.createElement("i", { className: "fas fa-plus" })))),
                 React.createElement("section", { className: "results" },

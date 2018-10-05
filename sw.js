@@ -11,11 +11,11 @@ var __wpo = {
     "https://use.fontawesome.com/releases/v5.3.1/css/all.css"
   ],
   "hashesMap": {
-    "b94155942876175a8c5b5162062b11f30218dd28": "./bundle.js"
+    "83825bf84df35a6ec60315db71127785bddbb2b2": "./bundle.js"
   },
   "strategy": "changed",
   "responseStrategy": "cache-first",
-  "version": "2018-10-5 15:42:57",
+  "version": "2018-10-5 16:24:24",
   "name": "webpack-offline",
   "pluginVersion": "5.0.5",
   "relativePaths": true

@@ -59,8 +59,8 @@ export class Main extends React.Component<any, MainState> {
                             </>)
                         })
                     }
-                    <input key="new_value" type="number" className="ticket-row" value={this.state.new_value} onChange={(e) => this.onNewValueChanged(e)} />
-                    <input key="new_quantity" type="number" className="ticket-row" value={this.state.new_quantity} onChange={(e) => this.onNewQuantityChanged(e)} />
+                    <input key="new_value" type="number" value={this.state.new_value} onChange={(e) => this.onNewValueChanged(e)} />
+                    <input key="new_quantity" type="number" value={this.state.new_quantity} onChange={(e) => this.onNewQuantityChanged(e)} />
                     <button className="ticket-row" key="new_add" disabled={this.canAddTicket(this.state.new_value, this.state.new_quantity)} onClick={(e) => this.onAddTicket(e)}>
                         <i className="fas fa-plus"></i>
                     </button>

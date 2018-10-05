@@ -42,36 +42,40 @@ button {
 }
 
 input {
+    min-width:5em!important;
+    max-width:99.99%!important;
     font-size: 1em;
     padding: 0.5em 0.3em 0.2em 0.3em;
     border-style: none;
     border-bottom: 1px solid #666;
     margin: 3px;
     border-bottom: 1px solid var(--input-border-color);
-    min-width:5em!important;
-    max-width:99.99%!important;
 }
 
 .tickets {
     display: grid;
     grid-template-columns: 0.5fr 0.5fr 3em;
+    grid-auto-flow: row;
     width: 100%;
-    min-width:50px!important;
-    max-width:99.99%!important;
 }
 
 .tickets > div.ticket-row {
     font-size: 1em;
-    padding: 0.5em 0.3em 0.2em 0.3em;
     border-style: none;
-    border-bottom: 1px solid #666;
     margin: 3px;
+    padding: 0.5em 0.3em 0.2em 0.3em;
+    border-bottom: 1px solid #666;
 }
 
 .tickets > button.ticket-row {
     padding: 0.5em 0.3em;
     border-style: none;
     margin: 2px 0;
+}
+
+.tickets input {
+    width:100%;
+    margin-right: 1px;
 }
 
 .tickets > .ticket-header {
