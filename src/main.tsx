@@ -32,7 +32,7 @@ export class Main extends React.Component<any, MainState> {
     render() {
         return (<div>
             <h1 className="app-name">
-                <img src="/img/icon192-inverse.png" className="app-logo" />
+                <img src="/tkt/img/icon192-inverse.png" className="app-logo" />
                 <span>Tickets répartis</span>
             </h1>
             <section>
