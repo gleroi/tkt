@@ -4,6 +4,7 @@
     "description": "L'application qui aide a calculer le nombre de tickets et de monnaie a échanger lors de vos achats",
     "display": "standalone",
     "theme_color": "#64649e",
+    "background_color": "#ff0000",
     "scope": "/tkt",
     "start_url": "/tkt/index.html",
     "icons": [
