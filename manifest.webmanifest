@@ -14,7 +14,7 @@
             "sizes": "48x48"
         },
         {
-            "src": "/tkt/img/icon192.png",
+            "src": "/tkt/img/icon192-inverse.png",
             "type": "image/png",
             "sizes": "192x192"
         }
