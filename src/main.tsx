@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Ticket, Result, priceOfResult, compute } from "./compute";
+import { compute, priceOfResult, Result, Ticket } from "./compute";
+import { loadDB, saveDB } from "./db";
 
 interface MainState {
     price: string;
@@ -83,7 +84,8 @@ export class Main extends React.Component<any, MainState> {
                                     <div className="result-diff-label">{diff > 0 ? "ajouté" : (diff < 0 ? "rendu" : "")}</div>
                                 </div>)
                             }</div>
-                        )})
+                            )
+                        })
                     }
                 </div>
             </section>
@@ -106,7 +108,7 @@ export class Main extends React.Component<any, MainState> {
         let price = convert(sprice);
         return !price
     }
-    
+
     onPriceChanged(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()
         this.setState({
@@ -163,17 +165,6 @@ export class Main extends React.Component<any, MainState> {
     }
 }
 
-function loadDB(): Ticket[] {
-    let str = window.localStorage.getItem("tkt_tickets");
-    if (str == null) {
-        return [];
-    }
-    return JSON.parse(str);
-}
-
-function saveDB(tickets: Ticket[]) {
-    window.localStorage.setItem("tkt_tickets", JSON.stringify(tickets));
-}
 
 function convert(val: string): number | undefined {
     try {
