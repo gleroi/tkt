@@ -11,7 +11,7 @@ module.exports = [{
     target: "web",
     mode: "development",
     entry: {
-        "bundle": __dirname + "/src/index.tsx",
+        "bundle": [__dirname + "/src/main-webcomponent.ts", __dirname + "/src/ticket-list.ts"],
     },
 
     output: {
@@ -80,7 +80,7 @@ module.exports = [{
             PACKAGE_VERSION: JSON.stringify(require("./package.json").version)
         }),
         new OfflinePlugin({
-            responseStrategy: "cache-first",
+            responseStrategy: "network-first",
             excludes: ["**/*.map"],
             externals: [
                 "https://use.fontawesome.com/releases/v5.3.1/css/all.css"
