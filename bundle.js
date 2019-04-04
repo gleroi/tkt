@@ -3053,6 +3053,90 @@ const svg = (strings, ...values) => new _lib_template_result_js__WEBPACK_IMPORTE
 
 /***/ }),
 
+/***/ "./src/add-ticket-form.ts":
+/*!********************************!*\
+  !*** ./src/add-ticket-form.ts ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! lit-element */ "./node_modules/lit-element/lit-element.js"), __webpack_require__(/*! ./db */ "./src/db.ts")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, lit_element_1, db_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    let AddTicketForm = class AddTicketForm extends lit_element_1.LitElement {
+        constructor() {
+            super(...arguments);
+            this.new_value = "";
+            this.new_quantity = "";
+        }
+        render() {
+            return lit_element_1.html `
+        <input id="new_value" type="number" .value="${this.new_value}" @input="${(e) => this.onNewValueChanged(e)}" />
+        <input id="new_quantity" type="number" .value="${this.new_quantity}" @input="${(e) => this.onNewQuantityChanged(e)}" />
+        <button className="ticket-row" key="new_add" ?disabled="${this.canAddTicket(this.new_value, this.new_quantity)}" @click="${(e) => this.onAddTicket(e)}">
+            <i className="fas fa-plus">++</i>
+        </button>
+        `;
+        }
+        canAddTicket(sval, sqty) {
+            let val = convert(sval);
+            let qty = convert(sqty);
+            return !(qty && val);
+        }
+        onAddTicket(e) {
+            e.preventDefault();
+            let val = convert(this.new_value);
+            let qty = convert(this.new_quantity);
+            if (val == null || qty == null) {
+                return;
+            }
+            db_1.getStore().addTicket(val, qty);
+            this.new_value = "";
+            this.new_quantity = "";
+        }
+        onNewValueChanged(e) {
+            e.preventDefault();
+            this.new_value = e.currentTarget.value;
+        }
+        onNewQuantityChanged(e) {
+            e.preventDefault();
+            this.new_quantity = e.currentTarget.value;
+        }
+    };
+    __decorate([
+        lit_element_1.property({ type: String })
+    ], AddTicketForm.prototype, "new_value", void 0);
+    __decorate([
+        lit_element_1.property({ type: String })
+    ], AddTicketForm.prototype, "new_quantity", void 0);
+    AddTicketForm = __decorate([
+        lit_element_1.customElement("tkt-add-ticket")
+    ], AddTicketForm);
+    exports.AddTicketForm = AddTicketForm;
+    function convert(val) {
+        try {
+            let price = null;
+            if (!(val == null || val.length == 0)) {
+                price = parseFloat(val);
+            }
+            return price ? price : undefined;
+        }
+        catch (err) {
+            return undefined;
+        }
+    }
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+
 /***/ "./src/db.ts":
 /*!*******************!*\
   !*** ./src/db.ts ***!
@@ -3063,6 +3147,40 @@ const svg = (strings, ...values) => new _lib_template_result_js__WEBPACK_IMPORTE
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    class Store {
+        constructor() {
+            this.subscribers = [];
+            this.tickets = [];
+        }
+        subscribe(cb) {
+            this.subscribers.push(cb);
+        }
+        callSubscribers() {
+            for (let cb of this.subscribers) {
+                cb(this.tickets);
+            }
+        }
+        init() {
+            this.tickets = loadDB();
+            this.callSubscribers();
+        }
+        addTicket(value, quantity) {
+            this.tickets.push({ value, quantity });
+            saveDB(this.tickets);
+            this.callSubscribers();
+        }
+        removeTicket(index) {
+            this.tickets.splice(index, 1);
+            saveDB(this.tickets);
+            this.callSubscribers();
+        }
+    }
+    exports.Store = Store;
+    let singletonStore = new Store();
+    function getStore() {
+        return singletonStore;
+    }
+    exports.getStore = getStore;
     function loadDB() {
         let str = window.localStorage.getItem("tkt_tickets");
         if (str == null) {
@@ -3070,11 +3188,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
         }
         return JSON.parse(str);
     }
-    exports.loadDB = loadDB;
     function saveDB(tickets) {
         window.localStorage.setItem("tkt_tickets", JSON.stringify(tickets));
     }
-    exports.saveDB = saveDB;
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
@@ -3094,10 +3210,16 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! lit-element */ "./node_modules/lit-element/lit-element.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, lit_element_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! lit-element */ "./node_modules/lit-element/lit-element.js"), __webpack_require__(/*! ./db */ "./src/db.ts")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, lit_element_1, db_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     let Main = class Main extends lit_element_1.LitElement {
+        firstUpdated(changedProperties) {
+            super.firstUpdated(changedProperties);
+            let store = db_1.getStore();
+            store.init();
+            console.log("main", "connected!");
+        }
         render() {
             return lit_element_1.html `
         <h1 className="app-name">
@@ -3105,6 +3227,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
             <span>Tickets répartis</span>
         </h1>
         <tkt-ticket-list></tkt-ticket-list>
+        <tkt-add-ticket></tkt-add-ticket>
         `;
         }
     };
@@ -3136,14 +3259,14 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
     Object.defineProperty(exports, "__esModule", { value: true });
     let TicketList = class TicketList extends lit_element_1.LitElement {
         constructor() {
-            super(...arguments);
+            super();
             this.tickets = [];
-            this.new_value = "";
-            this.new_quantity = "";
+            let store = db_1.getStore();
+            store.subscribe((state) => this.updateState(state));
         }
-        connectedCallback() {
-            super.connectedCallback();
-            this.tickets = db_1.loadDB();
+        updateState(state) {
+            this.tickets = state;
+            this.requestUpdate();
         }
         render() {
             return lit_element_1.html `
@@ -3162,84 +3285,23 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
                                 </button>
                             `;
             })}
-                    <input id="new_value" type="number" .value="${this.new_value}" 
-                        @input="${(e) => this.onNewValueChanged(e)}" />
-                    <input id="new_quantity" type="number" .value="${this.new_quantity}" 
-                        @input="${(e) => this.onNewQuantityChanged(e)}" />
-                    <button className="ticket-row" key="new_add" 
-                        ?disabled="${this.canAddTicket(this.new_value, this.new_quantity)}"
-                        @click="${(e) => this.onAddTicket(e)}">
-                        <i className="fas fa-plus">+</i>
-                    </button>
+                   
                 </div>
             </section>
         `;
         }
-        canAddTicket(sval, sqty) {
-            let val = convert(sval);
-            let qty = convert(sqty);
-            this.requestUpdate("disabled");
-            return !(qty && val);
-        }
-        onAddTicket(e) {
-            e.preventDefault();
-            let val = convert(this.new_value);
-            let qty = convert(this.new_quantity);
-            if (val == null || qty == null) {
-                return;
-            }
-            let tickets = this.tickets.concat([
-                { value: val, quantity: qty }
-            ]);
-            db_1.saveDB(tickets);
-            this.new_value = "";
-            this.new_quantity = "";
-            this.tickets = tickets;
-            console.log("add!");
-        }
         onRemoveTicket(e, ticketIndex) {
             e.preventDefault();
-            let tickets = this.tickets.slice(0);
-            tickets.splice(ticketIndex, 1);
-            db_1.saveDB(tickets);
-            this.tickets = tickets;
-        }
-        onNewValueChanged(e) {
-            e.preventDefault();
-            this.new_value = e.currentTarget.value;
-            console.log("new_value", this.new_value, e.currentTarget);
-        }
-        onNewQuantityChanged(e) {
-            e.preventDefault();
-            this.new_quantity = e.currentTarget.value;
-            console.log("new_quantity", this.new_quantity, e.currentTarget);
+            db_1.getStore().removeTicket(ticketIndex);
         }
     };
     __decorate([
         lit_element_1.property({ type: Array })
     ], TicketList.prototype, "tickets", void 0);
-    __decorate([
-        lit_element_1.property({ type: String })
-    ], TicketList.prototype, "new_value", void 0);
-    __decorate([
-        lit_element_1.property({ type: String })
-    ], TicketList.prototype, "new_quantity", void 0);
     TicketList = __decorate([
         lit_element_1.customElement("tkt-ticket-list")
     ], TicketList);
     exports.TicketList = TicketList;
-    function convert(val) {
-        try {
-            let price = null;
-            if (!(val == null || val.length == 0)) {
-                price = parseFloat(val);
-            }
-            return price ? price : undefined;
-        }
-        catch (err) {
-            return undefined;
-        }
-    }
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
@@ -3247,14 +3309,15 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./src/main-webcomponent.ts ./src/ticket-list.ts ***!
-  \*************************************************************/
+/*!**************************************************************************************!*\
+  !*** multi ./src/main-webcomponent.ts ./src/ticket-list.ts ./src/add-ticket-form.ts ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! E:\Work\tkt/src/main-webcomponent.ts */"./src/main-webcomponent.ts");
-module.exports = __webpack_require__(/*! E:\Work\tkt/src/ticket-list.ts */"./src/ticket-list.ts");
+__webpack_require__(/*! E:\Work\tkt/src/ticket-list.ts */"./src/ticket-list.ts");
+module.exports = __webpack_require__(/*! E:\Work\tkt/src/add-ticket-form.ts */"./src/add-ticket-form.ts");
 
 
 /***/ })

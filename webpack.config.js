@@ -11,7 +11,8 @@ module.exports = [{
     target: "web",
     mode: "development",
     entry: {
-        "bundle": [__dirname + "/src/main-webcomponent.ts", __dirname + "/src/ticket-list.ts"],
+        "bundle": [__dirname + "/src/main-webcomponent.ts", __dirname + "/src/ticket-list.ts",
+        __dirname + "/src/add-ticket-form.ts",],
     },
 
     output: {
@@ -79,13 +80,13 @@ module.exports = [{
         new webpack.DefinePlugin({
             PACKAGE_VERSION: JSON.stringify(require("./package.json").version)
         }),
-        new OfflinePlugin({
-            responseStrategy: "network-first",
-            excludes: ["**/*.map"],
-            externals: [
-                "https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-            ],
-            autoUpdate: 1000 * 60 * 5,
-        })
+        // new OfflinePlugin({
+        //     responseStrategy: "network-first",
+        //     excludes: ["**/*.map"],
+        //     externals: [
+        //         "https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        //     ],
+        //     autoUpdate: 1000 * 60 * 5,
+        // })
     ]
 }];
