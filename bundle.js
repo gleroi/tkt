@@ -3077,11 +3077,46 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
         }
         render() {
             return lit_element_1.html `
-        <input id="new_value" type="number" .value="${this.new_value}" @input="${(e) => this.onNewValueChanged(e)}" />
-        <input id="new_quantity" type="number" .value="${this.new_quantity}" @input="${(e) => this.onNewQuantityChanged(e)}" />
-        <button className="ticket-row" key="new_add" ?disabled="${this.canAddTicket(this.new_value, this.new_quantity)}" @click="${(e) => this.onAddTicket(e)}">
-            <i className="fas fa-plus">++</i>
-        </button>
+        <style>
+        :host([hidden]) {
+            display: none;
+        }
+        :host {
+            display: block;
+        }
+        .tickets {
+            display: grid;
+            grid-template-columns: 0.5fr 0.5fr 3em;
+            grid-auto-flow: row;
+            width: 100%;
+        }
+        .tickets > div.ticket-row {
+            font-size: 1em;
+            border-style: none;
+            margin: 3px;
+            padding: 0.5em 0.3em 0.2em 0.3em;
+            border-bottom: 1px solid #666;
+        }
+        .tickets > button.ticket-row {
+            padding: 0.5em 0.3em;
+            border-style: none;
+            margin: 2px 0;
+        }
+        .tickets input {
+            width:100%;
+            margin-right: 1px;
+        }
+        .tickets > .ticket-header {
+            font-weight: bold;
+        }
+        </style>
+        <div class="tickets">
+            <input class="ticket-row" type="number" .value="${this.new_value}" @input="${(e) => this.onNewValueChanged(e)}" />
+            <input class="ticket-row" type="number" .value="${this.new_quantity}" @input="${(e) => this.onNewQuantityChanged(e)}" />
+            <button class="ticket-row" key="new_add" ?disabled="${this.canAddTicket(this.new_value, this.new_quantity)}" @click="${(e) => this.onAddTicket(e)}">
+                <i class="fas fa-plus">+</i>
+            </button>
+        </div>
         `;
         }
         canAddTicket(sval, sqty) {
@@ -3270,24 +3305,56 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
         }
         render() {
             return lit_element_1.html `
-            <section>
-                <h2>Tickets</h2>
-                <div className="tickets">
-                    <div className="ticket-header">Montant</div>
-                    <div className="ticket-header">Quantité</div>
-                    <span>&nbsp;</span>
-                    ${this.tickets.map((t, i) => {
+        <style>
+        :host([hidden]) {
+            display: none;
+        }
+        :host {
+            display: block;
+        }
+        .tickets {
+            display: grid;
+            grid-template-columns: 0.5fr 0.5fr 3em;
+            grid-auto-flow: row;
+            width: 100%;
+        }
+        .tickets > div.ticket-row {
+            font-size: 1em;
+            border-style: none;
+            margin: 3px;
+            padding: 0.5em 0.3em 0.2em 0.3em;
+            border-bottom: 1px solid #666;
+        }
+        .tickets > button.ticket-row {
+            padding: 0.5em 0.3em;
+            border-style: none;
+            margin: 2px 0;
+        }
+        .tickets input {
+            width:100%;
+            margin-right: 1px;
+        }
+        .tickets > .ticket-header {
+            font-weight: bold;
+        }
+        </style>
+        <section>
+            <h2>Tickets</h2>
+            <div class="tickets">
+                <div class="ticket-header">Montant</div>
+                <div class="ticket-header">Quantité</div>
+                <span>&nbsp;</span>
+                ${this.tickets.map((t, i) => {
                 return lit_element_1.html `
-                                <div className="ticket-row">${t.value.toString()}</div>
-                                <div className="ticket-row">${t.quantity.toString()}</div>
-                                <button className="ticket-row" @click="${(e) => this.onRemoveTicket(e, i)}">
-                                    <i className="fas fa-minus">-</i>
-                                </button>
-                            `;
+                <div class="ticket-row">${t.value.toString()}</div>
+                <div class="ticket-row">${t.quantity.toString()}</div>
+                <button class="ticket-row" @click="${(e) => this.onRemoveTicket(e, i)}">
+                    <i class="fas fa-minus">-</i>
+                </button>
+                `;
             })}
-                   
-                </div>
-            </section>
+            </div>
+        </section>
         `;
         }
         onRemoveTicket(e, ticketIndex) {
