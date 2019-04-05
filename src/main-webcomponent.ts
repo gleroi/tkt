@@ -13,8 +13,9 @@ export class Main extends LitElement {
 
     render() {
         return html`
-        <h1 className="app-name">
-            <img src="/tkt/img/icon192-inverse.png" className="app-logo" />
+        <link rel="stylesheet" type="text/css" href="style/style.css" />
+        <h1 class="app-name">
+            <img src="/tkt/img/icon192-inverse.png" class="app-logo" />
             <span>Tickets répartis</span>
         </h1>
         <tkt-ticket-list></tkt-ticket-list>

@@ -1,5 +1,6 @@
 html {
     --main-color: #64649e;
+    --disabled-color: #9090a1;
     --input-border-color: #9898ff;
     --result-border-color: #a2a2e7;
 }
@@ -25,7 +26,7 @@ h1.app-name {
 img.app-logo {
     height: 40px;
     vertical-align: bottom;
-    margin-right: 7phttp: //127.0.0.1:5500/x;
+    margin-right: 7x;
 }
 
 section {
@@ -40,6 +41,14 @@ button {
     color: white;
     font-size: 1em;
     font-weight: bold;
+}
+
+button i {
+    font-style: normal;
+}
+
+button[disabled] {
+    background-color: var(--disabled-color);
 }
 
 input {

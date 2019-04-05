@@ -3077,39 +3077,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
         }
         render() {
             return lit_element_1.html `
-        <style>
-        :host([hidden]) {
-            display: none;
-        }
-        :host {
-            display: block;
-        }
-        .tickets {
-            display: grid;
-            grid-template-columns: 0.5fr 0.5fr 3em;
-            grid-auto-flow: row;
-            width: 100%;
-        }
-        .tickets > div.ticket-row {
-            font-size: 1em;
-            border-style: none;
-            margin: 3px;
-            padding: 0.5em 0.3em 0.2em 0.3em;
-            border-bottom: 1px solid #666;
-        }
-        .tickets > button.ticket-row {
-            padding: 0.5em 0.3em;
-            border-style: none;
-            margin: 2px 0;
-        }
-        .tickets input {
-            width:100%;
-            margin-right: 1px;
-        }
-        .tickets > .ticket-header {
-            font-weight: bold;
-        }
-        </style>
+        <link rel="stylesheet" type="text/css" href="style/style.css" />
         <div class="tickets">
             <input class="ticket-row" type="number" .value="${this.new_value}" @input="${(e) => this.onNewValueChanged(e)}" />
             <input class="ticket-row" type="number" .value="${this.new_quantity}" @input="${(e) => this.onNewQuantityChanged(e)}" />
@@ -3257,8 +3225,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
         }
         render() {
             return lit_element_1.html `
-        <h1 className="app-name">
-            <img src="/tkt/img/icon192-inverse.png" className="app-logo" />
+        <link rel="stylesheet" type="text/css" href="style/style.css" />
+        <h1 class="app-name">
+            <img src="/tkt/img/icon192-inverse.png" class="app-logo" />
             <span>Tickets répartis</span>
         </h1>
         <tkt-ticket-list></tkt-ticket-list>
@@ -3305,39 +3274,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
         }
         render() {
             return lit_element_1.html `
-        <style>
-        :host([hidden]) {
-            display: none;
-        }
-        :host {
-            display: block;
-        }
-        .tickets {
-            display: grid;
-            grid-template-columns: 0.5fr 0.5fr 3em;
-            grid-auto-flow: row;
-            width: 100%;
-        }
-        .tickets > div.ticket-row {
-            font-size: 1em;
-            border-style: none;
-            margin: 3px;
-            padding: 0.5em 0.3em 0.2em 0.3em;
-            border-bottom: 1px solid #666;
-        }
-        .tickets > button.ticket-row {
-            padding: 0.5em 0.3em;
-            border-style: none;
-            margin: 2px 0;
-        }
-        .tickets input {
-            width:100%;
-            margin-right: 1px;
-        }
-        .tickets > .ticket-header {
-            font-weight: bold;
-        }
-        </style>
+        <link rel="stylesheet" type="text/css" href="style/style.css" />
         <section>
             <h2>Tickets</h2>
             <div class="tickets">
