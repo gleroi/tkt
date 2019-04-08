@@ -29,6 +29,7 @@ export class Main extends LitElement {
             <img src="/tkt/img/icon192-inverse.png" class="app-logo" />
             <span>Tickets répartis</span>
         </h1>
+        <bill-input></bill-input>
         <tkt-ticket-list .tickets=${this.state} @tkt-remove-ticket=${this.removeTicket}>
         </tkt-ticket-list>
         <tkt-add-ticket @tkt-add-ticket=${this.addTicket}></tkt-add-ticket>

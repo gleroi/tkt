@@ -11,7 +11,7 @@ module.exports = [{
     target: "web",
     mode: "development",
     entry: {
-        "bundle": [__dirname + "/src/main-webcomponent.ts", __dirname + "/src/ticket-list.ts",
+        "bundle": [__dirname + "/src/main.ts", __dirname + "/src/ticket-list.ts",
         __dirname + "/src/add-ticket-form.ts",],
     },
 

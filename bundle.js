@@ -3203,10 +3203,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 /***/ }),
 
-/***/ "./src/main-webcomponent.ts":
-/*!**********************************!*\
-  !*** ./src/main-webcomponent.ts ***!
-  \**********************************/
+/***/ "./src/main.ts":
+/*!*********************!*\
+  !*** ./src/main.ts ***!
+  \*********************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3241,6 +3241,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
             <img src="/tkt/img/icon192-inverse.png" class="app-logo" />
             <span>Tickets répartis</span>
         </h1>
+        <bill-input></bill-input>
         <tkt-ticket-list .tickets=${this.state} @tkt-remove-ticket=${this.removeTicket}>
         </tkt-ticket-list>
         <tkt-add-ticket @tkt-add-ticket=${this.addTicket}></tkt-add-ticket>
@@ -3332,13 +3333,13 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************!*\
-  !*** multi ./src/main-webcomponent.ts ./src/ticket-list.ts ./src/add-ticket-form.ts ***!
-  \**************************************************************************************/
+/*!*************************************************************************!*\
+  !*** multi ./src/main.ts ./src/ticket-list.ts ./src/add-ticket-form.ts ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Work\tkt/src/main-webcomponent.ts */"./src/main-webcomponent.ts");
+__webpack_require__(/*! E:\Work\tkt/src/main.ts */"./src/main.ts");
 __webpack_require__(/*! E:\Work\tkt/src/ticket-list.ts */"./src/ticket-list.ts");
 module.exports = __webpack_require__(/*! E:\Work\tkt/src/add-ticket-form.ts */"./src/add-ticket-form.ts");
 
