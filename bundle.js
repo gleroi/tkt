@@ -3216,7 +3216,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! lit-element */ "./node_modules/lit-element/lit-element.js"), __webpack_require__(/*! ./db */ "./src/db.ts")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, lit_element_1, db_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! lit-element */ "./node_modules/lit-element/lit-element.js"), __webpack_require__(/*! ./db */ "./src/db.ts"), __webpack_require__(/*! ./add-ticket-form */ "./src/add-ticket-form.ts"), __webpack_require__(/*! ./price-input */ "./src/price-input.ts"), __webpack_require__(/*! ./ticket-list */ "./src/ticket-list.ts")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, lit_element_1, db_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     let Main = class Main extends lit_element_1.LitElement {
@@ -3241,7 +3241,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
             <img src="/tkt/img/icon192-inverse.png" class="app-logo" />
             <span>Tickets répartis</span>
         </h1>
-        <bill-input></bill-input>
+        <tkt-price-input></tkt-price-input>
         <tkt-ticket-list .tickets=${this.state} @tkt-remove-ticket=${this.removeTicket}>
         </tkt-ticket-list>
         <tkt-add-ticket @tkt-add-ticket=${this.addTicket}></tkt-add-ticket>
@@ -3261,6 +3261,64 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
         lit_element_1.customElement("tkt-main")
     ], Main);
     exports.Main = Main;
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+
+/***/ "./src/price-input.ts":
+/*!****************************!*\
+  !*** ./src/price-input.ts ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! lit-element */ "./node_modules/lit-element/lit-element.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, lit_element_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    let PriceInput = class PriceInput extends lit_element_1.LitElement {
+        constructor() {
+            super(...arguments);
+            this.value = undefined;
+        }
+        render() {
+            return lit_element_1.html `
+        <link rel="stylesheet" type="text/css" href="style/style.css" />
+        <section>
+            <h2>Prix</h2>
+            <input type="number" .value=${this.value} @input=${this.onPriceInput} />
+            <button @click=${this.onCompute} ?disabled=${this.canCompute(this.value)}>
+                <i className="fas fa-calculator">OK</i>
+            </button>
+        </section>
+        `;
+        }
+        onPriceInput(e) {
+            console.log("onpriceinput", e.currentTarget.valueAsNumber);
+            this.value = e.currentTarget.valueAsNumber;
+        }
+        canCompute(value) {
+            console.log("cancompute", value ? true : false);
+            return !value;
+        }
+        onCompute(e) {
+            console.log("oncompute");
+        }
+    };
+    __decorate([
+        lit_element_1.property({ type: Number })
+    ], PriceInput.prototype, "value", void 0);
+    PriceInput = __decorate([
+        lit_element_1.customElement("tkt-price-input")
+    ], PriceInput);
+    exports.PriceInput = PriceInput;
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
@@ -3333,15 +3391,13 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************************!*\
-  !*** multi ./src/main.ts ./src/ticket-list.ts ./src/add-ticket-form.ts ***!
-  \*************************************************************************/
+/*!***************************!*\
+  !*** multi ./src/main.ts ***!
+  \***************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Work\tkt/src/main.ts */"./src/main.ts");
-__webpack_require__(/*! E:\Work\tkt/src/ticket-list.ts */"./src/ticket-list.ts");
-module.exports = __webpack_require__(/*! E:\Work\tkt/src/add-ticket-form.ts */"./src/add-ticket-form.ts");
+module.exports = __webpack_require__(/*! E:\Work\tkt/src/main.ts */"./src/main.ts");
 
 
 /***/ })

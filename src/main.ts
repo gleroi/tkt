@@ -1,8 +1,12 @@
 import { customElement, html, LitElement, property } from 'lit-element';
+import "./add-ticket-form";
 import { AddTicketEvent } from './add-ticket-form';
 import { Ticket } from './compute';
 import { getStore } from "./db";
+import "./price-input";
+import "./ticket-list";
 import { RemoveTicketEvent } from './ticket-list';
+
 
 @customElement("tkt-main")
 export class Main extends LitElement {
@@ -29,7 +33,7 @@ export class Main extends LitElement {
             <img src="/tkt/img/icon192-inverse.png" class="app-logo" />
             <span>Tickets répartis</span>
         </h1>
-        <bill-input></bill-input>
+        <tkt-price-input></tkt-price-input>
         <tkt-ticket-list .tickets=${this.state} @tkt-remove-ticket=${this.removeTicket}>
         </tkt-ticket-list>
         <tkt-add-ticket @tkt-add-ticket=${this.addTicket}></tkt-add-ticket>
