@@ -1,5 +1,11 @@
 import { customElement, html, LitElement, property } from 'lit-element';
-import { getStore } from "./db";
+
+export interface AddTicketEvent extends CustomEvent {
+    detail: {
+        value: number;
+        quantity: number;
+    }
+}
 
 @customElement("tkt-add-ticket")
 export class AddTicketForm extends LitElement {
@@ -9,6 +15,7 @@ export class AddTicketForm extends LitElement {
 
     @property({ type: String })
     new_quantity: string = "";
+
 
     render() {
         return html`
@@ -36,7 +43,10 @@ export class AddTicketForm extends LitElement {
         if (val == null || qty == null) {
             return;
         }
-        getStore().addTicket(val, qty);
+        this.dispatchEvent(new CustomEvent("tkt-add-ticket", {
+            bubbles: true, composed: true,
+            detail: { value: val, quantity: qty },
+        }));
         this.new_value = "";
         this.new_quantity = "";
     }

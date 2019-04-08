@@ -1,23 +1,17 @@
 import { customElement, html, LitElement, property } from 'lit-element';
 import { Ticket } from "./compute";
-import { getStore } from "./db";
+
+export interface RemoveTicketEvent extends CustomEvent {
+    detail: {
+        index: number;
+    }
+}
 
 @customElement("tkt-ticket-list")
 export class TicketList extends LitElement {
 
-    @property({ type: Array })
+    @property({ type: Array, hasChanged: (newV, oldV) => true })
     tickets: Ticket[] = [];
-
-    constructor() {
-        super();
-        let store = getStore();
-        store.subscribe((state) => this.updateState(state))
-    }
-
-    updateState(state: Ticket[]) {
-        this.tickets = state;
-        this.requestUpdate();
-    }
 
     render() {
         return html`
@@ -46,7 +40,11 @@ export class TicketList extends LitElement {
 
     onRemoveTicket(e: React.MouseEvent<HTMLButtonElement>, ticketIndex: number) {
         e.preventDefault();
-        getStore().removeTicket(ticketIndex);
+        this.dispatchEvent(new CustomEvent("tkt-remove-ticket", {
+            detail: {
+                index: ticketIndex,
+            }
+        }));
     }
 
 }

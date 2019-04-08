@@ -3066,7 +3066,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! lit-element */ "./node_modules/lit-element/lit-element.js"), __webpack_require__(/*! ./db */ "./src/db.ts")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, lit_element_1, db_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! lit-element */ "./node_modules/lit-element/lit-element.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, lit_element_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     let AddTicketForm = class AddTicketForm extends lit_element_1.LitElement {
@@ -3099,7 +3099,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
             if (val == null || qty == null) {
                 return;
             }
-            db_1.getStore().addTicket(val, qty);
+            this.dispatchEvent(new CustomEvent("tkt-add-ticket", {
+                bubbles: true, composed: true,
+                detail: { value: val, quantity: qty },
+            }));
             this.new_value = "";
             this.new_quantity = "";
         }
@@ -3217,11 +3220,19 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     let Main = class Main extends lit_element_1.LitElement {
+        constructor() {
+            super(...arguments);
+            this.state = [];
+        }
         firstUpdated(changedProperties) {
             super.firstUpdated(changedProperties);
             let store = db_1.getStore();
+            store.subscribe((state) => this.updateState(state));
             store.init();
-            console.log("main", "connected!");
+        }
+        updateState(state) {
+            this.state = state;
+            this.requestUpdate();
         }
         render() {
             return lit_element_1.html `
@@ -3230,11 +3241,21 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
             <img src="/tkt/img/icon192-inverse.png" class="app-logo" />
             <span>Tickets répartis</span>
         </h1>
-        <tkt-ticket-list></tkt-ticket-list>
-        <tkt-add-ticket></tkt-add-ticket>
+        <tkt-ticket-list .tickets=${this.state} @tkt-remove-ticket=${this.removeTicket}>
+        </tkt-ticket-list>
+        <tkt-add-ticket @tkt-add-ticket=${this.addTicket}></tkt-add-ticket>
         `;
         }
+        addTicket(e) {
+            db_1.getStore().addTicket(e.detail.value, e.detail.quantity);
+        }
+        removeTicket(e) {
+            db_1.getStore().removeTicket(e.detail.index);
+        }
     };
+    __decorate([
+        lit_element_1.property({ type: Array })
+    ], Main.prototype, "state", void 0);
     Main = __decorate([
         lit_element_1.customElement("tkt-main")
     ], Main);
@@ -3258,19 +3279,13 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! lit-element */ "./node_modules/lit-element/lit-element.js"), __webpack_require__(/*! ./db */ "./src/db.ts")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, lit_element_1, db_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! lit-element */ "./node_modules/lit-element/lit-element.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, lit_element_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     let TicketList = class TicketList extends lit_element_1.LitElement {
         constructor() {
-            super();
+            super(...arguments);
             this.tickets = [];
-            let store = db_1.getStore();
-            store.subscribe((state) => this.updateState(state));
-        }
-        updateState(state) {
-            this.tickets = state;
-            this.requestUpdate();
         }
         render() {
             return lit_element_1.html `
@@ -3296,11 +3311,15 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
         }
         onRemoveTicket(e, ticketIndex) {
             e.preventDefault();
-            db_1.getStore().removeTicket(ticketIndex);
+            this.dispatchEvent(new CustomEvent("tkt-remove-ticket", {
+                detail: {
+                    index: ticketIndex,
+                }
+            }));
         }
     };
     __decorate([
-        lit_element_1.property({ type: Array })
+        lit_element_1.property({ type: Array, hasChanged: (newV, oldV) => true })
     ], TicketList.prototype, "tickets", void 0);
     TicketList = __decorate([
         lit_element_1.customElement("tkt-ticket-list")
