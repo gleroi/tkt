@@ -3426,7 +3426,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
         <section class="results">
                 <h2>Résultats</h2>
                 <div>
-                    ${this.results.map((r, ri) => {
+                    ${this.results.map((r) => {
                 let diff = this.price - compute_1.priceOfResult(r, this.tickets);
                 return lit_element_1.html `
                             <div class="result">

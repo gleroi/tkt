@@ -21,7 +21,7 @@ export class ResultsList extends LitElement {
                 <h2>Résultats</h2>
                 <div>
                     ${
-                        this.results.map((r, ri) => {
+                        this.results.map((r) => {
                             let diff = this.price - priceOfResult(r, this.tickets);
                             return html`
                             <div class="result">
