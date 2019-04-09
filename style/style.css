@@ -41,6 +41,8 @@ button {
     color: white;
     font-size: 1em;
     font-weight: bold;
+    transition-property: filter;
+    transition-duration: 200ms;
 }
 
 button i {
@@ -49,6 +51,10 @@ button i {
 
 button[disabled] {
     background-color: var(--disabled-color);
+}
+
+button:active:not([disabled]) {
+    transform: translateY(1px);
 }
 
 input {

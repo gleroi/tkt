@@ -1,5 +1,11 @@
 import { customElement, html, LitElement, property } from "lit-element";
 
+export interface SubmitPriceEvent {
+    detail: {
+        price: number;
+    }
+}
+
 @customElement("tkt-price-input")
 export class PriceInput extends LitElement {
 
@@ -13,24 +19,25 @@ export class PriceInput extends LitElement {
             <h2>Prix</h2>
             <input type="number" .value=${this.value} @input=${this.onPriceInput} />
             <button @click=${this.onCompute} ?disabled=${this.canCompute(this.value)}>
-                <i className="fas fa-calculator">OK</i>
+                <i class="fas fa-calculator">OK</i>
             </button>
         </section>
         `;
     }
 
-
-    onPriceInput(e) {
-        console.log("onpriceinput", e.currentTarget.valueAsNumber);
-        this.value = e.currentTarget.valueAsNumber;
+    onPriceInput(e: Event) {
+        this.value = e.target ? e.target.valueAsNumber : null;
     }
 
     canCompute(value: number | undefined): unknown {
-        console.log("cancompute", value ? true : false);
         return !value;
     }
 
-    onCompute(e) {
-        console.log("oncompute");
+    onCompute(e: Event) {
+        e.preventDefault();
+        this.dispatchEvent(new CustomEvent("tkt-submit-price", {
+            bubbles: true, composed: true,
+            detail: { price: this.value },
+        }));
     }
 }

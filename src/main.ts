@@ -1,18 +1,25 @@
 import { customElement, html, LitElement, property } from 'lit-element';
 import "./add-ticket-form";
 import { AddTicketEvent } from './add-ticket-form';
-import { Ticket } from './compute';
+import { compute, Result, Ticket } from './compute';
 import { getStore } from "./db";
 import "./price-input";
+import { SubmitPriceEvent } from './price-input';
+import "./results-list";
 import "./ticket-list";
 import { RemoveTicketEvent } from './ticket-list';
-
 
 @customElement("tkt-main")
 export class Main extends LitElement {
 
     @property({ type: Array })
-    state: Ticket[] = [];
+    tickets: Ticket[] = [];
+
+    @property({ type: Array })
+    results: Result[] = [];
+
+    @property({ type: Number })
+    price: number = 0
 
     firstUpdated(changedProperties: Map<string | number | symbol, unknown>) {
         super.firstUpdated(changedProperties);
@@ -22,7 +29,7 @@ export class Main extends LitElement {
     }
 
     updateState(state: Ticket[]) {
-        this.state = state;
+        this.tickets = state;
         this.requestUpdate();
     }
 
@@ -33,10 +40,11 @@ export class Main extends LitElement {
             <img src="/tkt/img/icon192-inverse.png" class="app-logo" />
             <span>Tickets répartis</span>
         </h1>
-        <tkt-price-input></tkt-price-input>
-        <tkt-ticket-list .tickets=${this.state} @tkt-remove-ticket=${this.removeTicket}>
+        <tkt-price-input @tkt-submit-price=${this.submitPrice}></tkt-price-input>
+        <tkt-ticket-list .tickets=${this.tickets} @tkt-remove-ticket=${this.removeTicket}>
         </tkt-ticket-list>
         <tkt-add-ticket @tkt-add-ticket=${this.addTicket}></tkt-add-ticket>
+        <tkt-results-list .tickets=${this.tickets} .price=${this.price} .results=${this.results}></tkt-results-list>
         `;
     }
 
@@ -46,5 +54,10 @@ export class Main extends LitElement {
 
     removeTicket(e: RemoveTicketEvent) {
         getStore().removeTicket(e.detail.index);
+    }
+
+    submitPrice(e: SubmitPriceEvent) {
+        this.price = e.detail.price;
+        this.results = compute(this.price, this.tickets);
     }
 }

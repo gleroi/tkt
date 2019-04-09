@@ -3143,6 +3143,62 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
 
 /***/ }),
 
+/***/ "./src/compute.ts":
+/*!************************!*\
+  !*** ./src/compute.ts ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    const MaxReturnedMoney = 3;
+    function compute(price, tickets) {
+        let results = [];
+        let result = new Array(tickets.length).fill(0);
+        while (true) {
+            let done = nextResult(result, tickets);
+            if (done) {
+                break;
+            }
+            let diff = price - priceOfResult(result, tickets);
+            if (diff >= -MaxReturnedMoney) {
+                results.push(result.slice(0));
+            }
+        }
+        results.sort((r1, r2) => Math.abs(price - priceOfResult(r1, tickets)) - Math.abs(price - priceOfResult(r2, tickets)));
+        return results;
+    }
+    exports.compute = compute;
+    function nextResult(r, tickets) {
+        for (let t = 0; t < tickets.length; t++) {
+            let max = tickets[t].quantity;
+            if (r[t] + 1 > max) {
+                r[t] = 0;
+                continue;
+            }
+            else {
+                r[t] += 1;
+                return false;
+            }
+        }
+        return true;
+    }
+    function priceOfResult(r, tickets) {
+        let price = 0;
+        for (let t = 0; t < tickets.length; t++) {
+            price += tickets[t].value * r[t];
+        }
+        return price;
+    }
+    exports.priceOfResult = priceOfResult;
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+
 /***/ "./src/db.ts":
 /*!*******************!*\
   !*** ./src/db.ts ***!
@@ -3216,13 +3272,15 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! lit-element */ "./node_modules/lit-element/lit-element.js"), __webpack_require__(/*! ./db */ "./src/db.ts"), __webpack_require__(/*! ./add-ticket-form */ "./src/add-ticket-form.ts"), __webpack_require__(/*! ./price-input */ "./src/price-input.ts"), __webpack_require__(/*! ./ticket-list */ "./src/ticket-list.ts")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, lit_element_1, db_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! lit-element */ "./node_modules/lit-element/lit-element.js"), __webpack_require__(/*! ./compute */ "./src/compute.ts"), __webpack_require__(/*! ./db */ "./src/db.ts"), __webpack_require__(/*! ./add-ticket-form */ "./src/add-ticket-form.ts"), __webpack_require__(/*! ./price-input */ "./src/price-input.ts"), __webpack_require__(/*! ./results-list */ "./src/results-list.ts"), __webpack_require__(/*! ./ticket-list */ "./src/ticket-list.ts")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, lit_element_1, compute_1, db_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     let Main = class Main extends lit_element_1.LitElement {
         constructor() {
             super(...arguments);
-            this.state = [];
+            this.tickets = [];
+            this.results = [];
+            this.price = 0;
         }
         firstUpdated(changedProperties) {
             super.firstUpdated(changedProperties);
@@ -3231,7 +3289,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
             store.init();
         }
         updateState(state) {
-            this.state = state;
+            this.tickets = state;
             this.requestUpdate();
         }
         render() {
@@ -3241,10 +3299,11 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
             <img src="/tkt/img/icon192-inverse.png" class="app-logo" />
             <span>Tickets répartis</span>
         </h1>
-        <tkt-price-input></tkt-price-input>
-        <tkt-ticket-list .tickets=${this.state} @tkt-remove-ticket=${this.removeTicket}>
+        <tkt-price-input @tkt-submit-price=${this.submitPrice}></tkt-price-input>
+        <tkt-ticket-list .tickets=${this.tickets} @tkt-remove-ticket=${this.removeTicket}>
         </tkt-ticket-list>
         <tkt-add-ticket @tkt-add-ticket=${this.addTicket}></tkt-add-ticket>
+        <tkt-results-list .tickets=${this.tickets} .price=${this.price} .results=${this.results}></tkt-results-list>
         `;
         }
         addTicket(e) {
@@ -3253,10 +3312,20 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
         removeTicket(e) {
             db_1.getStore().removeTicket(e.detail.index);
         }
+        submitPrice(e) {
+            this.price = e.detail.price;
+            this.results = compute_1.compute(this.price, this.tickets);
+        }
     };
     __decorate([
         lit_element_1.property({ type: Array })
-    ], Main.prototype, "state", void 0);
+    ], Main.prototype, "tickets", void 0);
+    __decorate([
+        lit_element_1.property({ type: Array })
+    ], Main.prototype, "results", void 0);
+    __decorate([
+        lit_element_1.property({ type: Number })
+    ], Main.prototype, "price", void 0);
     Main = __decorate([
         lit_element_1.customElement("tkt-main")
     ], Main);
@@ -3295,21 +3364,23 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
             <h2>Prix</h2>
             <input type="number" .value=${this.value} @input=${this.onPriceInput} />
             <button @click=${this.onCompute} ?disabled=${this.canCompute(this.value)}>
-                <i className="fas fa-calculator">OK</i>
+                <i class="fas fa-calculator">OK</i>
             </button>
         </section>
         `;
         }
         onPriceInput(e) {
-            console.log("onpriceinput", e.currentTarget.valueAsNumber);
-            this.value = e.currentTarget.valueAsNumber;
+            this.value = e.target ? e.target.valueAsNumber : null;
         }
         canCompute(value) {
-            console.log("cancompute", value ? true : false);
             return !value;
         }
         onCompute(e) {
-            console.log("oncompute");
+            e.preventDefault();
+            this.dispatchEvent(new CustomEvent("tkt-submit-price", {
+                bubbles: true, composed: true,
+                detail: { price: this.value },
+            }));
         }
     };
     __decorate([
@@ -3319,6 +3390,75 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
         lit_element_1.customElement("tkt-price-input")
     ], PriceInput);
     exports.PriceInput = PriceInput;
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+
+/***/ "./src/results-list.ts":
+/*!*****************************!*\
+  !*** ./src/results-list.ts ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! lit-element */ "./node_modules/lit-element/lit-element.js"), __webpack_require__(/*! ./compute */ "./src/compute.ts")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, lit_element_1, compute_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    let ResultsList = class ResultsList extends lit_element_1.LitElement {
+        constructor() {
+            super(...arguments);
+            this.tickets = [];
+            this.results = [];
+            this.price = 0;
+        }
+        render() {
+            return lit_element_1.html `
+        <link rel="stylesheet" type="text/css" href="style/style.css" />
+
+        <section class="results">
+                <h2>Résultats</h2>
+                <div>
+                    ${this.results.map((r, ri) => {
+                let diff = this.price - compute_1.priceOfResult(r, this.tickets);
+                return lit_element_1.html `
+                            <div class="result">
+                                ${r.map((qty, t) => (lit_element_1.html `
+                                        <div class="result-item">
+                                            <div class="result-item-val">${this.tickets[t].value}</div>
+                                            <div>${qty}</div>
+                                        </div>`)).concat(lit_element_1.html `
+                                        <div class="result-diff">
+                                            <div>${diff.toFixed(2)}</div>
+                                            <div class="result-diff-label">${diff > 0 ? "ajouté" : (diff < 0 ? "rendu" : "")}</div>
+                                        </div>`)}
+                            </div>`;
+            })}
+                </div>
+        </section>
+        `;
+        }
+    };
+    __decorate([
+        lit_element_1.property({ type: Array })
+    ], ResultsList.prototype, "tickets", void 0);
+    __decorate([
+        lit_element_1.property({ type: Array })
+    ], ResultsList.prototype, "results", void 0);
+    __decorate([
+        lit_element_1.property({ type: Number })
+    ], ResultsList.prototype, "price", void 0);
+    ResultsList = __decorate([
+        lit_element_1.customElement("tkt-results-list")
+    ], ResultsList);
+    exports.ResultsList = ResultsList;
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
